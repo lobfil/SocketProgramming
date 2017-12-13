@@ -1,52 +1,56 @@
+import java.io.IOException;
 import java.net.*;
 
 public class Server implements Runnable {
     
     private DatagramSocket socket;
-    private DatagramSocket dataPacket;
+    private DatagramPacket dataPacket;
     
     private final byte[] buffer = new byte[65507];
     private int port = 8000;
-    private boolean flag = false;
-    private Thread thread;
+    private boolean flag = true;
+    Peers peerList;
+    Chat chat;
+
     
-    public Server() {
+    public Server(Peers p, Chat c) {
+    	
+    	peerList = p;
+    	chat = c;
+    	
         try {
-            this.socket = new DatagramSocket(port, InetAddress.getByName(""));
-        } catch (SocketException | UnknownHostException e) {
+            this.socket = new DatagramSocket(port);
+        } catch (SocketException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void run() {
-        // Nothing
-    }
-    
-    private void startServer() { // Starts the server
-        this.flag = true;
-        
-        thread = new Thread(this);
-        thread.start();
-    }
-    
-    private void resumeServer() { // Method to resume a server that was previously paused.
-        this.flag = true;
-    }
-    
-    public void stopServer() { // Stops the server.
-        this.flag = false;
-        
-        if (this.thread != null) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        
-    }
+    	while(flag)
+    	{
+    		dataPacket = new DatagramPacket(buffer, buffer.length);
+    		try {
+    			/*receiving an UDP package */
+				socket.receive(dataPacket);
+				
+				String message = new String( dataPacket.getData());
+            	InetAddress IPAddress = dataPacket.getAddress();
+            	
+            	String name = peerList.Peers.get(IPAddress); //translate ip into nickname
+            	chat.messages.add(name +": "+ message);
+            	
+            	/*emergency kill*/
+            	if(message=="STOP")
+            	{
+            		flag=false;
+            	}
+            	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
+    }              
     
     
 }

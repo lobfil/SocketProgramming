@@ -1,32 +1,39 @@
 import java.io.IOException;
 import java.net.*;
+import java.util.Iterator;
+import java.util.Map;
 
-public class Client implements Runnable {
+public class Client {
     
     private DatagramSocket socket;
-    private final byte[] buffer = new byte[65507];
+    private byte[] buffer = new byte[65507];
+    Peers peerList;
+    Chat chat;
     
-    private int port = 8000;
-    private boolean flag = false;
-    private Thread thread;
-    
-    public Client() {
-        try {
-            this.socket = new DatagramSocket();
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
+    Client(Peers p, Chat c)
+    {
+    	peerList = p;
+    	chat = c;
     }
     
-    @Override
-    public void run() {
-        // Nothing
+    public void send(String s){
+    	
+    	/*broadcasts a message to all the peers*/
+    	
+    	for (InetAddress ip : peerList.Peers.keySet()) {
+    		try {
+        		buffer = s.getBytes();
+				socket = new DatagramSocket();
+				DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, ip, 8000);
+				socket.send(sendPacket);			
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+  
+    	}
+		chat.messages.add(s);
+		//copy message to self
+
     }
-    
-    public void startClient() {
-        this.flag = true;
-        
-        thread = new Thread(this);
-        thread.start();
-    }
+
 }
