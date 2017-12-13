@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -15,19 +18,31 @@ public class Launcher {
 			e.printStackTrace();
 		}
 
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
         Server server = new Server(peer, chat);
         Client c = new Client(peer, chat);
    
         Thread s = new Thread(server);
         s.start();
+
+        String in = "";
+        String[] tokens;
               
        while(true)
        {
     	   String command=""; //command can be PRINT or SEND
     	   String argument=""; // the message to send
-    	   
-    	   /*   HERE    */
-    	   //introduce  reading command from console
+
+           try {
+               in = reader.readLine();
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+
+           tokens = in.split(" ", 2);
+           command = tokens[0];
+           argument = tokens[1];
     	   
     	   if(command == "SEND")
     	   {
