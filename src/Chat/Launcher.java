@@ -1,5 +1,3 @@
-package Chat;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +11,7 @@ public class Launcher {
         Chat chat = new Chat();
         try {
         	/* here we add the peers */
-			peer.Peers.put(InetAddress.getByName("192.168.43.181"), "Andrei");
+			peer.Peers.put(InetAddress.getByName("192.168.43.177"), "Fi");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -40,24 +38,26 @@ public class Launcher {
                e.printStackTrace();
            }
 
-           tokens = in.split(" ", 2);
+           tokens = in.split(" ",2);
            command = tokens[0];
            argument = tokens[1];
-
+           
     	   if(command.equals("SEND"))
     	   {
     		   c.send(argument);
     	   }
-    	   if(command.equals("PRINT"))
+    	   else if(command.equals( "PRINT"))
     	   {
     		   for(String m:chat.messages)
     		   {
     			   System.out.println(m);
     		   }
     	   }
-           if (command.equals("STOP")) {
-    	       System.out.print("Test Print");
-           }
+    	   else if(command.equals("STOP"))
+    	   {
+    		   c.listenMode = true;
+    		   System.out.println("Listening mode");
+    	   }
        }
         
     }
