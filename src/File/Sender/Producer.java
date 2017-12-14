@@ -1,6 +1,7 @@
+package File.Sender;
+
 import java.io.*;
 import java.nio.ByteBuffer;
-
 
 public class Producer {
 	byte buffer[][] = new byte[20][2042];

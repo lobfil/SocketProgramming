@@ -46,7 +46,7 @@ public class Server implements Runnable {
             	if(message=="STOP")
             	{
             		flag=false;
-			System.out.println("Stopped by "+ name);
+					System.out.println("Stopped by "+ name);
             	}
             	
 			} catch (IOException e) {

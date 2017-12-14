@@ -1,6 +1,7 @@
+package File.Sender;
+
 import java.io.*;
 import java.util.concurrent.*;
-
 
 public class FileSender {
 	

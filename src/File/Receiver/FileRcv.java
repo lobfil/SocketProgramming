@@ -1,9 +1,10 @@
+package File.Receiver;
+
 import java.io.*;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.*;
-
 
 public class FileRcv {
 	
