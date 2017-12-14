@@ -9,6 +9,7 @@ public class Client {
     private byte[] buffer = new byte[65507];
     Peers peerList;
     Chat chat;
+	public boolean listenMode=false;
     
     Client(Peers p, Chat c)
     {
@@ -16,10 +17,14 @@ public class Client {
     	chat = c;
     }
     
-    public void send(String s){
+   public void send(String s){
     	
     	/*broadcasts a message to all the peers*/
-    	
+    	if(listenMode)
+    	{
+    		System.out.println("Listen mode only");
+    	}else
+    	{
     	for (InetAddress ip : peerList.Peers.keySet()) {
     		try {
         		buffer = s.getBytes();
@@ -32,6 +37,7 @@ public class Client {
   
     	}
 		chat.messages.add(s);
+    	}
 		//copy message to self
 
     }
