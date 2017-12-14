@@ -1,7 +1,7 @@
+package Chat;
+
 import java.io.IOException;
 import java.net.*;
-import java.util.Iterator;
-import java.util.Map;
 
 public class Client {
     
