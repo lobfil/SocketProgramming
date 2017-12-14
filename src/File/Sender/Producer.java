@@ -30,7 +30,7 @@ public class Producer {
 	public void fillOne()
 	{
 		try {
-			byte[] a = new byte[2042];
+			byte[] a = new byte[2040];
 			int length = s.read(a);
 			
 			byte[] b = ByteBuffer.allocate(4).putInt(length).array();
