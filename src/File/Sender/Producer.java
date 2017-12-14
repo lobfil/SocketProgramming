@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 
 public class Producer {
-	byte buffer[][] = new byte[20][2042];
+	byte buffer[][] = new byte[20][2044];
 	int putin = 0;
 	int sent = 0;
 	InputStream s;
@@ -30,7 +30,7 @@ public class Producer {
 	public void fillOne()
 	{
 		try {
-			byte[] a = new byte[2044];
+			byte[] a = new byte[2042];
 			int length = s.read(a);
 			
 			byte[] b = ByteBuffer.allocate(4).putInt(length).array();
